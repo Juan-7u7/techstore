@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Favorite;
+use App\Notifications\FavoritoAgregado;
 use Livewire\Component;
 
 class FavoritoButton extends Component
@@ -46,6 +47,11 @@ class FavoritoButton extends Component
                 'product_id' => $this->productoId,
                 'product_data' => $this->productoData,
             ]);
+
+            // Envía correo de confirmación al usuario
+            $data = array_merge($this->productoData, ['product_id' => $this->productoId]);
+            auth()->user()->notify(new FavoritoAgregado($data));
+
             $this->esFavorito = true;
         }
     }
