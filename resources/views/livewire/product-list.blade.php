@@ -35,11 +35,24 @@
                     </span>
                     <h3 class="text-lg font-semibold mt-1">{{ $producto['title'] }}</h3>
                     <p class="text-xl font-bold text-indigo-600 mt-2">${{ number_format($producto['price'], 2) }}</p>
-                    <a href="{{ route('productos.detalle', $producto['id']) }}"
-                       class="mt-3 inline-block text-sm text-indigo-600 hover:text-indigo-800 font-medium">
-                        Ver detalle &rarr;
-                    </a>
-                </div>
+                    <div class="mt-3 flex items-center gap-2">
+                        <a href="{{ route('productos.detalle', $producto['id']) }}"
+                           class="text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                            Ver detalle &rarr;
+                        </a>
+                        @auth
+                            <livewire:favorito-button
+                                :productoId="$producto['id']"
+                                :productoData="[
+                                    'title' => $producto['title'],
+                                    'price' => $producto['price'],
+                                    'image' => $producto['images'][0] ?? '',
+                                    'category' => $producto['category']['name'] ?? '',
+                                ]"
+                                :key="'fav-' . $producto['id']"
+                            />
+                        @endauth
+                    </div>
             </div>
         @endforeach
     </div>
