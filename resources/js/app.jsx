@@ -1,12 +1,15 @@
+// Punto de entrada de React: monta los componentes en sus contenedores del DOM
 import { createRoot } from 'react-dom/client';
 import FavoritosRecientes from './components/FavoritosRecientes';
 import KpiChart from './components/KpiChart';
 
+// Monta el componente de favoritos recientes si existe el contenedor
 const contenedorFav = document.getElementById('react-favoritos');
 if (contenedorFav) {
     createRoot(contenedorFav).render(<FavoritosRecientes />);
 }
 
+// Monta la grafica de KPIs si existe el contenedor, pasandole datos desde data-atributos
 const contenedorChart = document.getElementById('react-chart');
 if (contenedorChart) {
     const labels = JSON.parse(contenedorChart.dataset.labels || '[]');

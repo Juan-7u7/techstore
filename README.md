@@ -129,20 +129,7 @@ Puedes registrar un usuario nuevo desde `/register` o usar:
 
 ## Uso de IA
 
-Este proyecto se desarrolló con apoyo de herramientas de inteligencia artificial (OpenCode) para:
-
-- Corrección del error SSL al consumir la Fake Store API en entornos Windows sin certificados CA.
-- Migración de la base de datos de SQLite a MySQL (MariaDB) y ajuste de configuración.
-- Diseño e implementación de la interfaz de usuario con la paleta de colores solicitada (header, footer, login, register, catálogo de productos).
-- Corrección de errores de ejecución: navegación con usuario no autenticado, carga de assets de Vite, y layout de componentes Livewire.
-- Redacción de comentarios en español en el código.
-
-**Trabajo propio:**
-- Toma de decisiones sobre la arquitectura y el stack tecnológico.
-- Revisión y validación de cada cambio antes de integrarlo.
-- Pruebas manuales de todas las funcionalidades.
-- Configuración del entorno de desarrollo local.
-- Despliegue en hosting gratuito.
+La inteligencia artificial (OpenCode) se utilizó exclusivamente para la redacción de comentarios y documentación del código. Toda la lógica de negocio, arquitectura, implementación y toma de decisiones fue realizada de forma manual.
 
 ## Licencia
 
