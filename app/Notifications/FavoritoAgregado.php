@@ -3,11 +3,10 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class FavoritoAgregado extends Notification implements ShouldQueue
+class FavoritoAgregado extends Notification
 {
     use Queueable;
 

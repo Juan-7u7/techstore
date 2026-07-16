@@ -54,8 +54,12 @@ class FavoritoButton extends Component
                 'category_name' => $this->productoData['category'] ?? null,
             ]);
 
-            $data = array_merge($this->productoData, ['product_id' => $this->productoId]);
-            auth()->user()->notify(new FavoritoAgregado($data));
+            try {
+                $data = array_merge($this->productoData, ['product_id' => $this->productoId]);
+                auth()->user()->notify(new FavoritoAgregado($data));
+            } catch (\Throwable $e) {
+                logger()->error('Error al enviar notificacion de favorito: ' . $e->getMessage());
+            }
 
             $this->esFavorito = true;
         }
