@@ -17,9 +17,11 @@ class DatabaseSeeder extends Seeder
     {
         User::firstOrCreate(
             ['email' => 'admin@test.com'],
-            User::factory()->make([
+            [
                 'name' => 'Admin',
-            ])->toArray(),
+                'password' => bcrypt('password'),
+                'email_verified_at' => now(),
+            ],
         );
     }
 }
