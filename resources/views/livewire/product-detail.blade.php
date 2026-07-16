@@ -36,6 +36,24 @@
                         modo="button"
                         :key="'fav-detail-' . $producto['id']"
                     />
+                    <button
+                        x-data="{ copiado: false }"
+                        @click="navigator.clipboard.writeText(window.location.href); copiado = true; setTimeout(() => copiado = false, 2000)"
+                        class="btn-pill-ghost text-sm gap-1.5"
+                        title="Copiar enlace del producto"
+                    >
+                        <template x-if="!copiado">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                            </svg>
+                        </template>
+                        <template x-if="copiado">
+                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </template>
+                        <span x-text="copiado ? 'Enlace copiado' : 'Compartir'"></span>
+                    </button>
                 </div>
 
                 <hr class="my-6 border-border/50">

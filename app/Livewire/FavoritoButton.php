@@ -40,6 +40,7 @@ class FavoritoButton extends Component
         if ($favorito) {
             $favorito->delete();
             $this->esFavorito = false;
+            $this->dispatch('toast', mensaje: 'Quitado de favoritos', tipo: 'info');
         } else {
             Favorite::create([
                 'user_id' => auth()->id(),
@@ -54,6 +55,7 @@ class FavoritoButton extends Component
                 logger()->error('Error al enviar notificacion de favorito: ' . $e->getMessage());
             }
 
+            $this->dispatch('toast', mensaje: 'Agregado a favoritos', tipo: 'success');
             $this->esFavorito = true;
         }
     }

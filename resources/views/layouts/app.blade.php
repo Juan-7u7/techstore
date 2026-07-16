@@ -74,6 +74,26 @@
                 </div>
             </footer>
         </div>
+
+        <div
+            x-data="{ toast: { mostrar: false, mensaje: '', tipo: '' } }"
+            @toast.window="toast = { mostrar: true, mensaje: $event.detail.mensaje, tipo: $event.detail.tipo }; setTimeout(() => toast.mostrar = false, 2500)"
+            x-show="toast.mostrar"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-2"
+            class="fixed bottom-5 right-5 z-50 max-w-xs pointer-events-auto"
+            style="display: none;"
+        >
+            <div class="flex items-center gap-3 px-4 py-3 rounded-xl shadow-soft-lg text-sm font-medium"
+                 :class="toast.tipo === 'success' ? 'bg-accent text-white' : 'bg-red-50 text-red-600 border border-red-200'">
+                <span x-text="toast.mensaje"></span>
+            </div>
+        </div>
+
         @stack('scripts')
     </body>
 </html>

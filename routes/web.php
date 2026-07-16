@@ -3,7 +3,16 @@
 use App\Livewire\Dashboard;
 use App\Livewire\ProductDetail;
 use App\Livewire\ProductList;
+use App\Services\FakeStoreService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/sitemap.xml', function (FakeStoreService $api) {
+    $productos = Cache::remember('sitemap_productos', 3600, fn() => $api->getProducts(0, 200));
+    $categorias = $api->getCategories();
+    return response()->view('sitemap', ['productos' => $productos, 'categorias' => $categorias])
+        ->header('Content-Type', 'text/xml');
+});
 
 // Pagina principal: listado de productos con paginacion
 Route::get('/', ProductList::class)->name('productos.index');
