@@ -47,21 +47,15 @@ class FavoritoButton extends Component
             $favorito->delete();
             $this->esFavorito = false;
         } else {
-            // Si no existe lo crea (agregar a favoritos)
             Favorite::create([
                 'user_id' => auth()->id(),
                 'product_id' => $this->productoId,
                 'product_data' => $this->productoData,
+                'category_name' => $this->productoData['category'] ?? null,
             ]);
 
-            // Envia correo de confirmacion al usuario (no critico, no debe romper el flujo)
-            try {
-                $data = array_merge($this->productoData, ['product_id' => $this->productoId]);
-                auth()->user()->notify(new FavoritoAgregado($data));
-            } catch (\Throwable $e) {
-                // Si el correo falla (Mailtrap caido, credenciales invalidas), el favorito ya se guardo
-                logger()->error('Error al enviar notificacion de favorito: ' . $e->getMessage());
-            }
+            $data = array_merge($this->productoData, ['product_id' => $this->productoId]);
+            auth()->user()->notify(new FavoritoAgregado($data));
 
             $this->esFavorito = true;
         }

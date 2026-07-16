@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 // Modelo que almacena los productos favoritos de cada usuario
 class Favorite extends Model
 {
-    // Atributos asignables masivamente: usuario, producto y datos del producto en JSON
-    protected $fillable = ['user_id', 'product_id', 'product_data'];
+    protected $fillable = ['user_id', 'product_id', 'product_data', 'category_name'];
 
     // Convierte product_data automaticamente de JSON a array de PHP
     protected function casts(): array

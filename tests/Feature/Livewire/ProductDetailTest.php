@@ -26,7 +26,8 @@ class ProductDetailTest extends TestCase
     public function muestra_detalle_cuando_producto_existe(): void
     {
         Http::fake([
-            'api.escuelajs.co/*' => Http::response($this->productoMock),
+            'api.escuelajs.co/api/v1/products/1' => Http::response($this->productoMock),
+            'api.escuelajs.co/api/v1/categories/1/products*' => Http::response([]),
         ]);
 
         $componente = Livewire::test(ProductDetail::class, ['id' => 1]);

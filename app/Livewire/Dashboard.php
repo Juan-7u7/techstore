@@ -4,25 +4,22 @@ namespace App\Livewire;
 
 use App\Models\Favorite;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
-// Componente Livewire del dashboard con KPIs y graficas
 class Dashboard extends Component
 {
-    public array $kpis = [];           // Indicadores clave: total usuarios, activos, favoritos, precio promedio
-    public array $productosTop = [];   // Top 5 productos mas favoritados
-    public array $chartData = [];      // Datos para la grafica de categorias (labels + values)
-    public array $favoritosRecientes = []; // Favoritos del usuario actual (ultimos 5)
+    public array $kpis = [];
+    public array $productosTop = [];
+    public array $chartData = [];
+    public array $favoritosRecientes = [];
 
-    // Al montar el componente calcula todos los KPIs
     public function mount(): void
     {
         $this->calcularKPIs();
         $this->obtenerFavoritosRecientes();
     }
 
-    // Obtiene los ultimos 5 favoritos del usuario autenticado
     public function obtenerFavoritosRecientes(): void
     {
         $user = auth()->user();
@@ -38,34 +35,32 @@ class Dashboard extends Component
             ->toArray();
     }
 
-    // Calcula todos los indicadores del dashboard desde la base de datos
     public function calcularKPIs(): void
     {
-        $this->kpis = [
-            'total_usuarios' => User::count(),
-            'usuarios_activos' => User::has('favorites')->count(),
-            'total_favoritos' => Favorite::count(),
-        ];
+        $this->kpis = Cache::remember('dashboard_kpis', 300, function () {
+            $promedio = Favorite::whereNotNull('product_data->price')
+                ->selectRaw('AVG(CAST(JSON_EXTRACT(product_data, "$.price") AS DECIMAL(10,2))) as promedio')
+                ->value('promedio');
 
-        // Precio promedio usando el JSON product_data de la BD MySQL
-        $promedio = Favorite::whereNotNull('product_data->price')
-            ->select(DB::raw('AVG(JSON_EXTRACT(product_data, "$.price")) as promedio'))
-            ->value('promedio');
-        $this->kpis['precio_promedio'] = $promedio ? round((float) $promedio, 2) : 0;
+            return [
+                'total_usuarios' => User::count(),
+                'usuarios_activos' => User::has('favorites')->count(),
+                'total_favoritos' => Favorite::count(),
+                'precio_promedio' => $promedio ? round((float) $promedio, 2) : 0,
+            ];
+        });
 
-        // Productos mas agregados a favoritos (top 5) con una sola query
-        $topProductos = Favorite::select(
-                'favorites.product_id',
-                DB::raw('count(*) as total'),
-                DB::raw('(SELECT product_data FROM favorites f2 WHERE f2.product_id = favorites.product_id AND f2.product_data IS NOT NULL LIMIT 1) as product_data')
-            )
-            ->groupBy('favorites.product_id')
+        $topIds = Favorite::selectRaw('product_id, count(*) as total')
+            ->groupBy('product_id')
             ->orderByDesc('total')
             ->limit(5)
             ->get();
 
-        $this->productosTop = $topProductos->map(function ($item) {
-            $data = is_string($item->product_data) ? json_decode($item->product_data, true) : ($item->product_data ?? []);
+        $this->productosTop = $topIds->map(function ($item) {
+            $fav = Favorite::where('product_id', $item->product_id)
+                ->whereNotNull('product_data')
+                ->first();
+            $data = $fav ? (is_string($fav->product_data) ? json_decode($fav->product_data, true) : $fav->product_data) : [];
             return [
                 'product_id' => $item->product_id,
                 'total' => $item->total,
@@ -75,15 +70,14 @@ class Dashboard extends Component
             ];
         })->toArray();
 
-        // Distribucion de favoritos por categoria para la grafica
-        $categorias = Favorite::whereNotNull('product_data->category')
-            ->select(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(product_data, '$.category.name')) as categoria"), DB::raw('count(*) as total'))
-            ->groupBy('categoria')
+        $categorias = Favorite::whereNotNull('category_name')
+            ->selectRaw('category_name, count(*) as total')
+            ->groupBy('category_name')
             ->orderByDesc('total')
             ->get();
 
         $this->chartData = [
-            'labels' => $categorias->pluck('categoria')->toArray(),
+            'labels' => $categorias->pluck('category_name')->toArray(),
             'values' => $categorias->pluck('total')->toArray(),
         ];
     }
