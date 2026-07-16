@@ -1,33 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 // Componente React que muestra los ultimos 5 favoritos del usuario
-export default function FavoritosRecientes() {
-    // Estado: lista de favoritos y bandera de carga
-    const [favoritos, setFavoritos] = useState([]);
-    const [cargando, setCargando] = useState(true);
+// Los datos vienen del servidor (Livewire) via data-favoritos, sin fetch a la API
+export default function FavoritosRecientes({ favoritosIniciales = [] }) {
 
-    // Al montar el componente obtiene los favoritos via API
-    useEffect(() => {
-        fetch('/api/favorites', {
-            headers: {
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest', // Necesario para Sanctum SPA
-            },
-            credentials: 'same-origin', // Envia la cookie de sesion
-        })
-            .then(res => res.json())
-            .then(data => {
-                setFavoritos(data.slice(0, 5)); // Solo los ultimos 5
-                setCargando(false);
-            })
-            .catch(() => setCargando(false)); // Silencia errores si no hay sesion
-    }, []);
-
-    if (cargando) {
-        return <p className="text-gray-500">Cargando favoritos...</p>;
-    }
-
-    if (favoritos.length === 0) {
+    if (favoritosIniciales.length === 0) {
         return <p className="text-gray-500">No tienes favoritos aún.</p>;
     }
 
@@ -35,7 +12,7 @@ export default function FavoritosRecientes() {
         <div className="space-y-3">
             <h3 className="text-lg font-semibold">Tus favoritos recientes</h3>
             <ul className="divide-y divide-gray-200">
-                {favoritos.map(fav => (
+                {favoritosIniciales.map(fav => (
                     <li key={fav.id} className="py-2 flex items-center gap-3">
                         {fav.product_data?.image && (
                             <img

@@ -13,11 +13,29 @@ class Dashboard extends Component
     public array $kpis = [];           // Indicadores clave: total usuarios, activos, favoritos, precio promedio
     public array $productosTop = [];   // Top 5 productos mas favoritados
     public array $chartData = [];      // Datos para la grafica de categorias (labels + values)
+    public array $favoritosRecientes = []; // Favoritos del usuario actual (ultimos 5)
 
     // Al montar el componente calcula todos los KPIs
     public function mount(): void
     {
         $this->calcularKPIs();
+        $this->obtenerFavoritosRecientes();
+    }
+
+    // Obtiene los ultimos 5 favoritos del usuario autenticado
+    public function obtenerFavoritosRecientes(): void
+    {
+        $user = auth()->user();
+        if (!$user) {
+            $this->favoritosRecientes = [];
+            return;
+        }
+
+        $this->favoritosRecientes = $user->favorites()
+            ->latest()
+            ->take(5)
+            ->get()
+            ->toArray();
     }
 
     // Calcula todos los indicadores del dashboard desde la base de datos

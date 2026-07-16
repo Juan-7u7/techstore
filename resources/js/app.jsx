@@ -6,7 +6,8 @@ import KpiChart from './components/KpiChart';
 // Monta el componente de favoritos recientes si existe el contenedor
 const contenedorFav = document.getElementById('react-favoritos');
 if (contenedorFav) {
-    createRoot(contenedorFav).render(<FavoritosRecientes />);
+    const favoritos = JSON.parse(contenedorFav.dataset.favoritos || '[]');
+    createRoot(contenedorFav).render(<FavoritosRecientes favoritosIniciales={favoritos} />);
 }
 
 // Monta la grafica de KPIs si existe el contenedor, pasandole datos desde data-atributos

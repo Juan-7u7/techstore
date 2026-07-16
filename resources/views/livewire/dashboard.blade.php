@@ -61,7 +61,8 @@
     {{-- Favoritos recientes (React) --}}
     <div class="mt-6 bg-white rounded-2xl border border-accent/20 shadow-stack-sm p-6">
         <h3 class="text-lg font-heading font-semibold text-dark mb-4">Favoritos recientes</h3>
-        <div id="react-favoritos"></div>
+        <div id="react-favoritos"
+             data-favoritos="{{ json_encode($favoritosRecientes) }}"></div>
     </div>
 
 </div>
