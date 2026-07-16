@@ -1,13 +1,13 @@
 import React, { useRef, useEffect } from 'react';
-import { Chart, registerables } from 'chart.js';
-
-Chart.register(...registerables);
 
 export default function KpiChart({ labels, values }) {
     const canvasRef = useRef(null);
     const chartRef = useRef(null);
 
     useEffect(() => {
+        const Chart = window.Chart;
+        if (!Chart) return;
+
         if (chartRef.current) {
             chartRef.current.destroy();
         }
