@@ -17,11 +17,12 @@ new class extends Component
 }; ?>
 
 <nav x-data="{ open: false }" class="bg-surface border-b border-border/50 sticky top-0 z-50 backdrop-blur-lg bg-surface/90">
+    <div class="border-t-[3px] border-accent/40"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center gap-8">
                 <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-2.5 shrink-0">
-                    <x-application-logo class="block h-7 w-auto fill-current text-primary" />
+                    <img src="{{ asset('images/logo.svg') }}" alt="TechStore" class="h-7 w-auto">
                     <span class="font-heading font-semibold text-primary text-lg tracking-tight hidden sm:inline">TechStore</span>
                 </a>
 
@@ -78,7 +79,7 @@ new class extends Component
         </div>
     </div>
 
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden border-t border-border/50">
+    <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" style="display: none;" class="sm:hidden border-t border-border/50">
         <div class="pt-3 pb-4 px-4 space-y-1">
             <x-responsive-nav-link :href="route('productos.index')" :active="request()->routeIs('productos.*')" wire:navigate>
                 Productos

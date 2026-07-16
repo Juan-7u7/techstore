@@ -17,7 +17,7 @@
         <div class="min-h-screen flex flex-col items-center justify-center px-4 py-12">
             <div class="text-center mb-8">
                 <a href="/" wire:navigate class="inline-flex items-center gap-3">
-                    <x-application-logo class="w-10 h-10 fill-current text-primary" />
+                    <img src="{{ asset('images/logo.svg') }}" alt="TechStore" class="h-9 w-auto">
                     <span class="text-xl font-heading font-semibold text-primary tracking-tight hidden sm:inline">TechStore</span>
                 </a>
             </div>
