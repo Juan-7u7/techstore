@@ -1,23 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+        <h2 class="font-semibold text-xl text-dark leading-tight">
+            Dashboard
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {{-- Componente React: Favoritos recientes --}}
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <div id="react-favoritos"></div>
-                </div>
+    <div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {{-- Componente React: Favoritos recientes --}}
+            <div class="bg-white rounded-2xl border border-accent/20 shadow-sm p-6">
+                <h3 class="text-lg font-semibold text-dark mb-4">Favoritos recientes</h3>
+                <div id="react-favoritos"></div>
+            </div>
 
-                <div class="md:col-span-2 bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <p class="text-gray-900 dark:text-gray-100">
-                        Bienvenido a TechStore Explorer. Explora productos y guarda tus favoritos.
-                    </p>
-                </div>
+            {{-- Bienvenida --}}
+            <div class="md:col-span-2 bg-white rounded-2xl border border-accent/20 shadow-sm p-6 flex flex-col justify-center">
+                <h3 class="text-lg font-semibold text-dark">Bienvenido a TechStore Explorer</h3>
+                <p class="text-dark/60 mt-2">
+                    Explora productos desde la Fake Store API y guarda tus favoritos para verlos despues.
+                </p>
+                <a href="{{ route('productos.index') }}" wire:navigate
+                   class="mt-4 inline-flex items-center gap-2 text-primary font-medium hover:text-primary/70 transition self-start">
+                    Explorar productos &rarr;
+                </a>
             </div>
         </div>
     </div>
