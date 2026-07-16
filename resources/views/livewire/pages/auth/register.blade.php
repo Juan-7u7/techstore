@@ -39,7 +39,7 @@ new #[Layout('layouts.guest')] class extends Component
 <div>
     {{-- Encabezado del formulario --}}
     <div class="text-center mb-6">
-        <h2 class="text-xl font-bold text-dark">Crear cuenta</h2>
+        <h2 class="text-xl font-heading font-bold text-dark">Crear cuenta</h2>
         <p class="text-sm text-dark/50 mt-1">Registrate para guardar tus productos favoritos</p>
     </div>
 

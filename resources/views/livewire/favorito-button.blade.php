@@ -1,6 +1,6 @@
 <button
     wire:click="toggleFavorito"
-    class="inline-flex items-center gap-1.5 p-2 rounded-lg text-sm font-medium transition
+    class="inline-flex items-center gap-1.5 p-2 rounded-full text-sm font-medium transition
         {{ $esFavorito ? 'bg-red-50 text-red-500 hover:bg-red-100' : 'text-dark/50 hover:text-red-400 hover:bg-red-50' }}"
     title="{{ $esFavorito ? 'Quitar de favoritos' : 'Agregar a favoritos' }}"
 >

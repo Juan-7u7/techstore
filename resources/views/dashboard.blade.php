@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-dark leading-tight">
+        <h2 class="font-heading font-semibold text-xl text-dark leading-tight">
             Dashboard
         </h2>
     </x-slot>
@@ -8,14 +8,14 @@
     <div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             {{-- Componente React: Favoritos recientes --}}
-            <div class="bg-white rounded-2xl border border-accent/20 shadow-sm p-6">
-                <h3 class="text-lg font-semibold text-dark mb-4">Favoritos recientes</h3>
+            <div class="bg-white rounded-2xl border border-accent/20 shadow-stack-sm p-6">
+                <h3 class="text-lg font-heading font-semibold text-dark mb-4">Favoritos recientes</h3>
                 <div id="react-favoritos"></div>
             </div>
 
             {{-- Bienvenida --}}
-            <div class="md:col-span-2 bg-white rounded-2xl border border-accent/20 shadow-sm p-6 flex flex-col justify-center">
-                <h3 class="text-lg font-semibold text-dark">Bienvenido a TechStore Explorer</h3>
+            <div class="md:col-span-2 bg-white rounded-2xl border border-accent/20 shadow-stack-sm p-6 flex flex-col justify-center">
+                <h3 class="text-lg font-heading font-semibold text-dark">Bienvenido a TechStore Explorer</h3>
                 <p class="text-dark/60 mt-2">
                     Explora productos desde la Fake Store API y guarda tus favoritos para verlos despues.
                 </p>

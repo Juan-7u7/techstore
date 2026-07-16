@@ -1,7 +1,7 @@
 <div class="max-w-5xl mx-auto">
     @if ($producto)
         {{-- Tarjeta de detalle del producto --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-accent/20 overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-stack-md border border-accent/20 overflow-hidden">
             <div class="md:flex">
                 {{-- Galeria de imagenes --}}
                 <div class="md:w-1/2 p-6">
@@ -18,7 +18,7 @@
                         <span class="text-sm font-semibold text-primary uppercase tracking-wider">
                             {{ $producto['category']['name'] ?? 'Sin categoria' }}
                         </span>
-                        <h1 class="text-2xl font-bold mt-2 text-dark">{{ $producto['title'] }}</h1>
+                        <h1 class="text-2xl font-heading font-bold mt-2 text-dark">{{ $producto['title'] }}</h1>
                         <p class="text-3xl font-bold text-primary mt-4">${{ number_format($producto['price'], 2) }}</p>
                         <p class="text-dark/70 mt-4 leading-relaxed">{{ $producto['description'] }}</p>
                     </div>

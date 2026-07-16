@@ -10,6 +10,7 @@
         <!-- Fuentes -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
 
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
     </head>
@@ -19,7 +20,7 @@
 
             <!-- Encabezado de pagina -->
             @if (isset($header))
-                <header class="bg-white border-b border-accent/30 shadow-sm">
+                <header class="bg-white border-b border-accent/30 shadow-stack-sm">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>

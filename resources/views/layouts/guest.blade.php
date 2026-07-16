@@ -10,6 +10,7 @@
         <!-- Fuentes -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
 
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
     </head>
@@ -24,7 +25,7 @@
             </div>
 
             <!-- Tarjeta del formulario -->
-            <div class="w-full sm:max-w-md bg-white border border-accent/50 shadow-lg rounded-2xl px-8 py-6">
+            <div class="w-full sm:max-w-md bg-white border border-accent/50 shadow-stack-lg rounded-2xl px-8 py-6">
                 {{ $slot }}
             </div>
 

@@ -23,7 +23,7 @@
     {{-- Grid de productos responsivo --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach ($productos as $producto)
-            <div class="bg-white rounded-2xl shadow-sm border border-accent/20 overflow-hidden hover:shadow-lg hover:border-accent transition-all duration-300 flex flex-col">
+            <div class="bg-white rounded-2xl shadow-stack-sm border border-accent/20 overflow-hidden hover:shadow-stack-lg hover:border-accent transition-all duration-300 flex flex-col">
                 {{-- Imagen del producto --}}
                 <img
                     src="{{ $producto['images'][0] ?? 'https://placehold.co/300x300' }}"
@@ -35,7 +35,7 @@
                     <span class="text-xs font-semibold text-primary uppercase tracking-wider">
                         {{ $producto['category']['name'] ?? 'Sin categoria' }}
                     </span>
-                    <h3 class="text-lg font-semibold mt-1 text-dark line-clamp-2">{{ $producto['title'] }}</h3>
+                    <h3 class="text-lg font-heading font-semibold mt-1 text-dark line-clamp-2">{{ $producto['title'] }}</h3>
                     <p class="text-xl font-bold text-primary mt-2">${{ number_format($producto['price'], 2) }}</p>
                     {{-- Acciones: ver detalle y favorito --}}
                     <div class="mt-auto pt-4 flex items-center justify-between">
