@@ -8,7 +8,9 @@ export default function FavoritosRecientes() {
         fetch('/api/favorites', {
             headers: {
                 'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
             },
+            credentials: 'same-origin',
         })
             .then(res => res.json())
             .then(data => {

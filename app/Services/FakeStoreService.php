@@ -13,7 +13,7 @@ class FakeStoreService
      */
     public function getProducts(int $offset = 0, int $limit = 20): array
     {
-        $response = Http::get("{$this->baseUrl}/products", [
+        $response = Http::withOptions(['verify' => false])->get("{$this->baseUrl}/products", [
             'offset' => $offset,
             'limit' => $limit,
         ]);
@@ -26,7 +26,7 @@ class FakeStoreService
      */
     public function getProduct(int $id): ?array
     {
-        $response = Http::get("{$this->baseUrl}/products/{$id}");
+        $response = Http::withOptions(['verify' => false])->get("{$this->baseUrl}/products/{$id}");
 
         return $response->json();
     }
@@ -36,7 +36,7 @@ class FakeStoreService
      */
     public function getCategories(): array
     {
-        $response = Http::get("{$this->baseUrl}/categories");
+        $response = Http::withOptions(['verify' => false])->get("{$this->baseUrl}/categories");
 
         return $response->json() ?? [];
     }
@@ -46,7 +46,7 @@ class FakeStoreService
      */
     public function getProductsByCategory(int $categoryId, int $offset = 0, int $limit = 20): array
     {
-        $response = Http::get("{$this->baseUrl}/categories/{$categoryId}/products", [
+        $response = Http::withOptions(['verify' => false])->get("{$this->baseUrl}/categories/{$categoryId}/products", [
             'offset' => $offset,
             'limit' => $limit,
         ]);

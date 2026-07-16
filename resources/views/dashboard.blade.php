@@ -23,5 +23,5 @@
     </div>
 
     @viteReactRefresh
-    @vite('resources/js/app.js')
+    @vite('resources/js/app.jsx')
 </x-app-layout>
