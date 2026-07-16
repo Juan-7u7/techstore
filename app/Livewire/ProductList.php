@@ -17,6 +17,7 @@ class ProductList extends Component
     public int $pagina = 0;             // Pagina actual para paginacion
     public int $limite = 20;            // Productos por pagina
     public bool $hayMas = true;         // Indica si hay mas paginas disponibles
+    public string $busqueda = '';       // Texto de busqueda por nombre
 
     protected FakeStoreService $api;    // Servicio de la Fake Store API
 
@@ -39,12 +40,14 @@ class ProductList extends Component
         $this->categorias = $this->api->getCategories();
     }
 
-    // Obtiene productos con paginacion, aplicando filtro de categoria si corresponde
     public function cargarProductos(): void
     {
         $offset = $this->pagina * $this->limite;
+        $titulo = $this->busqueda ?: null;
 
-        if ($this->categoriaSeleccionada > 0) {
+        if ($titulo) {
+            $this->productos = $this->api->getProducts($offset, $this->limite, $titulo);
+        } elseif ($this->categoriaSeleccionada > 0) {
             $this->productos = $this->api->getProductsByCategory(
                 $this->categoriaSeleccionada, $offset, $this->limite
             );
@@ -53,6 +56,12 @@ class ProductList extends Component
         }
 
         $this->hayMas = count($this->productos) >= $this->limite;
+    }
+
+    public function updatedBusqueda(): void
+    {
+        $this->pagina = 0;
+        $this->cargarProductos();
     }
 
     // Avanza a la siguiente pagina de resultados

@@ -18,12 +18,12 @@ class FakeStoreService
     /**
      * Obtiene todos los productos con paginación opcional.
      */
-    public function getProducts(int $offset = 0, int $limit = 20): array
+    public function getProducts(int $offset = 0, int $limit = 20, ?string $title = null): array
     {
-        $response = Http::withOptions($this->opcionesHttp())->get("{$this->baseUrl}/products", [
-            'offset' => $offset,
-            'limit' => $limit,
-        ]);
+        $params = ['offset' => $offset, 'limit' => $limit];
+        if ($title) $params['title'] = $title;
+
+        $response = Http::withOptions($this->opcionesHttp())->get("{$this->baseUrl}/products", $params);
 
         return $response->json() ?? [];
     }
