@@ -71,20 +71,18 @@
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
                         >
-                        @auth
-                            <div class="absolute top-2 right-2 z-10">
-                                <livewire:favorito-button
-                                    :productoId="$producto['id']"
-                                    :productoData="[
-                                        'title' => $producto['title'],
-                                        'price' => $producto['price'],
-                                        'image' => $producto['images'][0] ?? '',
-                                        'category' => $producto['category']['name'] ?? '',
-                                    ]"
-                                    :key="'fav-' . $producto['id']"
-                                />
-                            </div>
-                        @endauth
+                        <div class="absolute top-2 right-2 z-10">
+                            <livewire:favorito-button
+                                :productoId="$producto['id']"
+                                :productoData="[
+                                    'title' => $producto['title'],
+                                    'price' => $producto['price'],
+                                    'image' => $producto['images'][0] ?? '',
+                                    'category' => $producto['category']['name'] ?? '',
+                                ]"
+                                :key="'fav-' . $producto['id']"
+                            />
+                        </div>
                     </div>
 
                     <div class="p-4 flex flex-col flex-1 gap-1.5">
