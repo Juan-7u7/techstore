@@ -49,7 +49,7 @@ class Dashboard extends Component
                 'price' => $data['price'] ?? 0,
                 'image' => $data['images'][0] ?? $data['image'] ?? null,
             ];
-        });
+        })->toArray();
 
         $categorias = Favorite::whereNotNull('product_data->category')
             ->select(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(product_data, '$.category.name')) as categoria"), DB::raw('count(*) as total'))
