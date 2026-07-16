@@ -12,6 +12,8 @@
     }
 }
 
+[x-cloak] { display: none !important; }
+
 @layer base {
     body {
         @apply antialiased text-primary bg-fondo;
