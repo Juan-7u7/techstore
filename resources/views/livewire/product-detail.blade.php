@@ -11,7 +11,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12">
             <div class="bg-fondo rounded-2xl overflow-hidden aspect-square shadow-soft-sm">
                 <img
-                    src="{{ $producto['images'][0] ?? 'https://placehold.co/600x600' }}"
+                    src="{{ $producto['images'][0] ?? asset('images/placeholder.svg') }}"
                     alt="{{ $producto['title'] }}"
                     class="w-full h-full object-cover"
                 >
@@ -80,7 +80,7 @@
                             <a href="{{ route('productos.detalle', $item['id']) }}" wire:navigate>
                                 <div class="relative aspect-square bg-fondo overflow-hidden">
                                     <img
-                                        src="{{ $item['images'][0] ?? 'https://placehold.co/400x400' }}"
+                                        src="{{ $item['images'][0] ?? asset('images/placeholder.svg') }}"
                                         alt="{{ $item['title'] }}"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                         loading="lazy"

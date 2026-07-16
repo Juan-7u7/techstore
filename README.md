@@ -223,6 +223,13 @@ curl -X DELETE http://localhost:8000/api/favorites/1 \
 | `SQLSTATE[HY000] General error: 1 no such function: JSON_UNQUOTE` | Dashboard usa funciones MySQL | Cambiar a `DB_CONNECTION=mysql` en `.env` |
 | Página en blanco sin estilos | Assets sin compilar | `npm run build` |
 
+## Notas sobre la API
+
+Esta prueba utiliza la **Fake Store API de Platzi** (`https://fakeapi.platzi.com/`)
+tal como se solicitó en los requisitos. Durante el desarrollo se observó que algunos
+productos pueden devolver imágenes rotas o nulas, por lo que se implementó un
+fallback con una imagen placeholder local (`public/images/placeholder.svg`).
+
 ## Uso de IA
 
 La inteligencia artificial (OpenCode) se utilizó exclusivamente para la redacción de comentarios y documentación del código. Toda la lógica de negocio, arquitectura, implementación y toma de decisiones fue realizada de forma manual.

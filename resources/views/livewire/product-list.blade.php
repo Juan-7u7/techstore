@@ -66,7 +66,7 @@
                 <div class="card-product group">
                     <div class="relative aspect-square bg-fondo overflow-hidden">
                         <img
-                            src="{{ $producto['images'][0] ?? 'https://placehold.co/400x400' }}"
+                            src="{{ $producto['images'][0] ?? asset('images/placeholder.svg') }}"
                             alt="{{ $producto['title'] }}"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
