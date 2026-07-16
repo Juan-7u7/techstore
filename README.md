@@ -101,6 +101,23 @@ curl -X DELETE http://localhost:8000/api/favorites/1 \
   -H "Authorization: Bearer TU_TOKEN"
 ```
 
+### Probar con Postman / Insomnia
+
+1. Importa el archivo `docs/techstore-explorer.postman_collection.json` o `docs/techstore-explorer.insomnia.json`
+2. Define `base_url` (default: `http://localhost:8000`)
+3. Obtén un token de Sanctum:
+
+   ```bash
+   php artisan tinker
+   ```
+
+   ```php
+   $user = \App\Models\User::first();
+   $user->createToken('api-test')->plainTextToken;
+   ```
+
+4. Copia el token en la variable `token` del collection
+
 ## Credenciales de prueba
 
 Puedes registrar un usuario nuevo desde `/register` o usar:

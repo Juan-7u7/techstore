@@ -1,0 +1,246 @@
+{
+    "info": {
+        "name": "TechStore Explorer API",
+        "description": "# TechStore Explorer API\n\n## Como obtener el token\n\nEjecuta en la terminal del proyecto:\n\n```bash\nphp artisan tinker\n```\n\nDentro de tinker:\n\n```php\n$user = \\App\\Models\\User::first();\n$user->createToken('postman')->plainTextToken;\n```\n\nCopia el token que devuelve y pegalo en la variable `token` del collection.\n\n## Variables\n\n- `base_url`: default `http://localhost:8000`\n- `token`: token de Sanctum (ver arriba)",
+        "schema": "https://go.postman.co/collection/2.1.0"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:8000",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+            }
+        ]
+    },
+    "item": [
+        {
+            "name": "Obtener usuario autenticado",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "user"]
+                },
+                "description": "Devuelve los datos del usuario autenticado con el token de Sanctum."
+            },
+            "response": [
+                {
+                    "name": "OK",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n    \"id\": 1,\n    \"name\": \"Juan\",\n    \"email\": \"juan@example.com\",\n    \"email_verified_at\": \"2026-07-15T00:00:00.000000Z\",\n    \"created_at\": \"2026-07-15T00:00:00.000000Z\",\n    \"updated_at\": \"2026-07-15T00:00:00.000000Z\"\n}"
+                },
+                {
+                    "name": "No autenticado",
+                    "status": "Unauthorized",
+                    "code": 401,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n    \"message\": \"Unauthenticated.\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Listar favoritos",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/favorites",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "favorites"]
+                },
+                "description": "Devuelve la lista de productos favoritos del usuario autenticado."
+            },
+            "response": [
+                {
+                    "name": "OK (con datos)",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "[\n    {\n        \"id\": 1,\n        \"user_id\": 1,\n        \"product_id\": 5,\n        \"product_data\": {\n            \"title\": \"Producto Ejemplo\",\n            \"price\": 100,\n            \"image\": \"https://via.placeholder.com/300\",\n            \"category\": \"Electronics\"\n        },\n        \"created_at\": \"2026-07-15T00:00:00.000000Z\",\n        \"updated_at\": \"2026-07-15T00:00:00.000000Z\"\n    }\n]"
+                },
+                {
+                    "name": "OK (vacio)",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "[]"
+                },
+                {
+                    "name": "No autenticado",
+                    "status": "Unauthorized",
+                    "code": 401,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n    \"message\": \"Unauthenticated.\"\n}"
+                }
+            ]
+        },
+        {
+            "name": "Agregar favorito",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"product_id\": 5,\n    \"product_data\": {\n        \"title\": \"Producto Ejemplo\",\n        \"price\": 100,\n        \"image\": \"https://via.placeholder.com/300\",\n        \"category\": \"Electronics\"\n    }\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/favorites",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "favorites"]
+                },
+                "description": "Agrega un producto a favoritos. `product_data` es opcional."
+            },
+            "response": [
+                {
+                    "name": "Creado",
+                    "status": "Created",
+                    "code": 201,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n    \"id\": 1,\n    \"user_id\": 1,\n    \"product_id\": 5,\n    \"product_data\": {\n        \"title\": \"Producto Ejemplo\",\n        \"price\": 100,\n        \"image\": \"https://via.placeholder.com/300\",\n        \"category\": \"Electronics\"\n    },\n    \"updated_at\": \"2026-07-15T00:00:00.000000Z\",\n    \"created_at\": \"2026-07-15T00:00:00.000000Z\"\n}"
+                },
+                {
+                    "name": "Ya existe",
+                    "status": "Conflict",
+                    "code": 409,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n    \"message\": \"El producto ya esta en favoritos\"\n}"
+                },
+                {
+                    "name": "Datos invalidos",
+                    "status": "Unprocessable Entity",
+                    "code": 422,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n    \"message\": \"The product_id field is required.\",\n    \"errors\": {\n        \"product_id\": [\"The product_id field is required.\"]\n    }\n}"
+                }
+            ]
+        },
+        {
+            "name": "Eliminar favorito",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/favorites/5",
+                    "host": ["{{base_url}}"],
+                    "path": ["api", "favorites", ":id"],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": "5",
+                            "description": "ID del producto (product_id)"
+                        }
+                    ]
+                },
+                "description": "Elimina un favorito por su `product_id`."
+            },
+            "response": [
+                {
+                    "name": "Eliminado",
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n    \"message\": \"Favorito eliminado\"\n}"
+                },
+                {
+                    "name": "No encontrado",
+                    "status": "Not Found",
+                    "code": 404,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n    \"message\": \"Favorito no encontrado\"\n}"
+                }
+            ]
+        }
+    ]
+}

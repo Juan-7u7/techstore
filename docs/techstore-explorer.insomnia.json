@@ -1,0 +1,123 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_source": "opencode",
+    "__export_date": "2026-07-15",
+    "__export_size": 1,
+    "resources": [
+        {
+            "_type": "workspace",
+            "_id": "__WORKSPACE__",
+            "name": "TechStore Explorer API",
+            "description": "# TechStore Explorer API\n\n## Como obtener el token\n\nEjecuta en la terminal del proyecto:\n\n```bash\nphp artisan tinker\n```\n\nDentro de tinker:\n\n```php\n$user = \\App\\Models\\User::first();\n$user->createToken('insomnia')->plainTextToken;\n```\n\nCopia el token y pegalo en el env `token`."
+        },
+        {
+            "_type": "environment",
+            "_id": "__ENV__",
+            "name": "Base",
+            "data": {
+                "base_url": "http://localhost:8000",
+                "token": ""
+            },
+            "color": "#0077C0"
+        },
+        {
+            "_type": "request_group",
+            "_id": "__GRP_FAVORITES__",
+            "name": "Favoritos",
+            "description": "Endpoints para gestionar productos favoritos",
+            "environment": {}
+        },
+        {
+            "_type": "request",
+            "_id": "__REQ_USER__",
+            "name": "Obtener usuario autenticado",
+            "parentId": "__WORKSPACE__",
+            "method": "GET",
+            "url": "{{base_url}}/api/user",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{token}}"
+            },
+            "description": "Devuelve los datos del usuario autenticado con el token de Sanctum."
+        },
+        {
+            "_type": "request",
+            "_id": "__REQ_LIST__",
+            "name": "Listar favoritos",
+            "parentId": "__GRP_FAVORITES__",
+            "method": "GET",
+            "url": "{{base_url}}/api/favorites",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{token}}"
+            },
+            "description": "Devuelve la lista de productos favoritos del usuario autenticado."
+        },
+        {
+            "_type": "request",
+            "_id": "__REQ_ADD__",
+            "name": "Agregar favorito",
+            "parentId": "__GRP_FAVORITES__",
+            "method": "POST",
+            "url": "{{base_url}}/api/favorites",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{token}}"
+            },
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"product_id\": 5,\n    \"product_data\": {\n        \"title\": \"Producto Ejemplo\",\n        \"price\": 100,\n        \"image\": \"https://via.placeholder.com/300\",\n        \"category\": \"Electronics\"\n    }\n}"
+            },
+            "description": "Agrega un producto a favoritos. `product_data` es opcional."
+        },
+        {
+            "_type": "request",
+            "_id": "__REQ_DELETE__",
+            "name": "Eliminar favorito",
+            "parentId": "__GRP_FAVORITES__",
+            "method": "DELETE",
+            "url": "{{base_url}}/api/favorites/{{id}}",
+            "headers": [
+                {
+                    "name": "Accept",
+                    "value": "application/json"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{token}}"
+            },
+            "description": "Elimina un favorito por su `product_id`. Reemplaza `{{id}}` con el product_id.",
+            "parameters": [
+                {
+                    "name": "id",
+                    "value": "5",
+                    "description": "ID del producto (product_id)"
+                }
+            ]
+        }
+    ]
+}
