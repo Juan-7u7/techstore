@@ -70,7 +70,7 @@ class Dashboard extends Component
         })->toArray();
 
         $categorias = Favorite::whereNotNull('product_data->category')
-            ->select(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(product_data, '$.category.name')) as categoria"), DB::raw('count(*) as total'))
+            ->select(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(product_data, '$.category')) as categoria"), DB::raw('count(*) as total'))
             ->groupBy('categoria')
             ->orderByDesc('total')
             ->get();
