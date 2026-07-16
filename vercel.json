@@ -6,6 +6,5 @@
         { "source": "/assets/(.*)", "destination": "/assets/$1" },
         { "source": "/build/assets/(.*)", "destination": "/build/assets/$1" },
         { "source": "/(.*)", "destination": "/index.php" }
-    ],
-    "php": "8.3"
+    ]
 }
