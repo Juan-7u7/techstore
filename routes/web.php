@@ -15,6 +15,15 @@ Route::get('/dashboard', Dashboard::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+// Quitar favorito desde el dashboard (React)
+Route::post('/favorites/{productId}/remove', function (int $productId) {
+    auth()->user()->favorites()
+        ->where('product_id', $productId)
+        ->firstOrFail()
+        ->delete();
+    return response()->json(['success' => true]);
+})->middleware(['auth']);
+
 // Pagina de perfil de usuario
 Route::view('profile', 'profile')
     ->middleware(['auth'])
