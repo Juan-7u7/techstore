@@ -21,7 +21,7 @@ new class extends Component
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center gap-8">
-                <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-2.5 shrink-0">
+                <a href="{{ route('productos.index') }}" wire:navigate class="flex items-center gap-2.5 shrink-0">
                     <img src="{{ asset('images/logo.svg') }}" alt="TechStore" class="h-7 w-auto">
                     <span class="font-heading font-semibold text-primary text-lg tracking-tight hidden sm:inline">TechStore</span>
                 </a>

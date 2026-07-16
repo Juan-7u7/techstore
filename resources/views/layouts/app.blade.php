@@ -34,7 +34,7 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-left">
                         <div class="flex flex-col items-center sm:items-start gap-3">
-                            <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center gap-2.5">
+                            <a href="{{ route('productos.index') }}" wire:navigate class="flex items-center gap-2.5">
                                 <img src="{{ asset('images/logo.svg') }}" alt="TechStore" class="h-7 w-auto">
                                 <span class="font-heading font-semibold text-primary text-lg tracking-tight">TechStore</span>
                             </a>
