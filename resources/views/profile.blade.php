@@ -1,29 +1,19 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-heading font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <livewire:profile.update-profile-information-form />
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <livewire:profile.update-password-form />
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    <livewire:profile.delete-user-form />
-                </div>
+    <div class="max-w-2xl mx-auto space-y-8 pb-12">
+        <div class="flex items-center gap-4">
+            <span class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-accent/20 flex items-center justify-center text-lg sm:text-xl font-semibold text-accent shrink-0">
+                {{ substr(auth()->user()->name, 0, 2) }}
+            </span>
+            <div class="min-w-0">
+                <h1 class="text-heading text-primary">{{ auth()->user()->name }}</h1>
+                <p class="text-sm text-muted truncate">{{ auth()->user()->email }}</p>
             </div>
         </div>
+
+        <livewire:profile.update-profile-information-form />
+
+        <livewire:profile.update-password-form />
+
+        <livewire:profile.delete-user-form />
     </div>
 </x-app-layout>
