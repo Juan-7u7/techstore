@@ -11,7 +11,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-// Atributos que se pueden asignar masivamente y que se ocultan en respuestas JSON
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
@@ -19,7 +18,6 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
 
-    // Define que atributos deben convertirse automaticamente al accederlos
     protected function casts(): array
     {
         return [
@@ -28,7 +26,6 @@ class User extends Authenticatable
         ];
     }
 
-    // Relacion: un usuario tiene muchos favoritos
     public function favorites(): HasMany
     {
         return $this->hasMany(Favorite::class);

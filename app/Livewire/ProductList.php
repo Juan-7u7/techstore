@@ -8,33 +8,29 @@ use Livewire\Component;
 
 #[Layout('layouts.app')]
 
-// Componente Livewire del listado de productos con paginacion y filtro por categoria
 class ProductList extends Component
 {
-    public array $productos = [];        // Productos cargados de la API
-    public array $categorias = [];       // Categorias disponibles para filtrar
-    public int $categoriaSeleccionada = 0; // ID de la categoria activa (0 = todas)
-    public int $pagina = 0;             // Pagina actual para paginacion
-    public int $limite = 20;            // Productos por pagina
-    public bool $hayMas = true;         // Indica si hay mas paginas disponibles
-    public string $busqueda = '';       // Texto de busqueda por nombre
+    public array $productos = [];
+    public array $categorias = [];
+    public int $categoriaSeleccionada = 0;
+    public int $pagina = 0;
+    public int $limite = 20;
+    public bool $hayMas = true;
+    public string $busqueda = '';
 
-    protected FakeStoreService $api;    // Servicio de la Fake Store API
+    protected FakeStoreService $api;
 
-    // Inyecta el servicio de la API externa
     public function boot(FakeStoreService $api): void
     {
         $this->api = $api;
     }
 
-    // Al montar el componente carga categorias y productos iniciales
     public function mount(): void
     {
         $this->cargarCategorias();
         $this->cargarProductos();
     }
 
-    // Obtiene la lista de categorias desde la API
     public function cargarCategorias(): void
     {
         $this->categorias = $this->api->getCategories();
@@ -64,14 +60,12 @@ class ProductList extends Component
         $this->cargarProductos();
     }
 
-    // Avanza a la siguiente pagina de resultados
     public function paginaSiguiente(): void
     {
         $this->pagina++;
         $this->cargarProductos();
     }
 
-    // Retrocede a la pagina anterior si no esta en la primera
     public function paginaAnterior(): void
     {
         if ($this->pagina > 0) {
@@ -80,7 +74,6 @@ class ProductList extends Component
         }
     }
 
-    // Filtra productos por categoria y reinicia la paginacion
     public function filtrarPorCategoria(int $categoriaId): void
     {
         $this->categoriaSeleccionada = $categoriaId;
