@@ -8,16 +8,14 @@ use Livewire\Component;
 
 class FavoritoButton extends Component
 {
-    // ID del producto en la API externa
     public int $productoId;
-    // Datos del producto (titulo, precio, imagen, categoria)
     public array $productoData;
-    // Indica si el producto ya esta en favoritos
     public bool $esFavorito = false;
+    public string $modo = 'icon';
 
-    // Al montar verifica si el producto ya es favorito del usuario
-    public function mount(int $productoId, array $productoData = []): void
+    public function mount(int $productoId, array $productoData = [], string $modo = 'icon'): void
     {
+        $this->modo = $modo;
         $this->productoId = $productoId;
         $this->productoData = $productoData;
 

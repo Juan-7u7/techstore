@@ -10,27 +10,29 @@ use Livewire\Component;
 
 class ProductDetail extends Component
 {
-    // ID del producto recibido por la ruta
     public int $productoId;
-    // Datos del producto obtenido de la API
     public ?array $producto = null;
+    public array $relacionados = [];
 
     protected FakeStoreService $api;
 
-    // Inyecta el servicio de la Fake Store API
     public function boot(FakeStoreService $api): void
     {
         $this->api = $api;
     }
 
-    // Al montar el componente obtiene el producto por su ID
     public function mount(int $id): void
     {
         $this->productoId = $id;
         $this->producto = $this->api->getProduct($id);
+
+        if ($this->producto) {
+            $catId = $this->producto['category']['id'] ?? 0;
+            $todos = $this->api->getProductsByCategory($catId, 0, 8);
+            $this->relacionados = array_values(array_filter($todos, fn($p) => $p['id'] !== $id));
+        }
     }
 
-    // Renderiza la vista del detalle del producto
     public function render()
     {
         return view('livewire.product-detail');
