@@ -1,6 +1,11 @@
 <div class="space-y-8">
     <div>
-        <h1 class="text-heading text-primary">Bienvenido, {{ auth()->user()->name }} 👋</h1>
+        <h1 class="text-heading text-primary flex items-center gap-2">
+            Bienvenido, {{ auth()->user()->name }}
+            <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38a.882.882 0 01-1.09-.163l-3.568-3.568m11.22-5.284a4.5 4.5 0 013.53 2.049.75.75 0 01-.21 1.04l-3.955 2.637a3 3 0 01-1.564.504H12"/>
+            </svg>
+        </h1>
         <p class="text-sm text-muted mt-1">Resumen de actividad de TechStore Explorer</p>
     </div>
 
