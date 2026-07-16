@@ -35,25 +35,25 @@ class Dashboard extends Component
             ->value('promedio');
         $this->kpis['precio_promedio'] = $promedio ? round((float) $promedio, 2) : 0;
 
-        // Productos mas agregados a favoritos (top 5)
-        $topProductos = Favorite::select('product_id', DB::raw('count(*) as total'))
-            ->groupBy('product_id')
+        // Productos mas agregados a favoritos (top 5) con una sola query
+        $topProductos = Favorite::select(
+                'favorites.product_id',
+                DB::raw('count(*) as total'),
+                DB::raw('(SELECT product_data FROM favorites f2 WHERE f2.product_id = favorites.product_id AND f2.product_data IS NOT NULL LIMIT 1) as product_data')
+            )
+            ->groupBy('favorites.product_id')
             ->orderByDesc('total')
             ->limit(5)
             ->get();
 
         $this->productosTop = $topProductos->map(function ($item) {
-            // Busca cualquier favorito con datos del producto para obtener titulo/imagen
-            $fav = Favorite::where('product_id', $item->product_id)
-                ->whereNotNull('product_data')
-                ->first();
-            $data = $fav?->product_data;
+            $data = is_string($item->product_data) ? json_decode($item->product_data, true) : ($item->product_data ?? []);
             return [
                 'product_id' => $item->product_id,
                 'total' => $item->total,
                 'title' => $data['title'] ?? "Producto #{$item->product_id}",
                 'price' => $data['price'] ?? 0,
-                'image' => $data['images'][0] ?? $data['image'] ?? null,
+                'image' => $data['image'] ?? null,
             ];
         })->toArray();
 

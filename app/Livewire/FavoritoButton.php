@@ -56,9 +56,14 @@ class FavoritoButton extends Component
                 'product_data' => $this->productoData,
             ]);
 
-            // Envia correo de confirmacion al usuario
-            $data = array_merge($this->productoData, ['product_id' => $this->productoId]);
-            auth()->user()->notify(new FavoritoAgregado($data));
+            // Envia correo de confirmacion al usuario (no critico, no debe romper el flujo)
+            try {
+                $data = array_merge($this->productoData, ['product_id' => $this->productoId]);
+                auth()->user()->notify(new FavoritoAgregado($data));
+            } catch (\Throwable $e) {
+                // Si el correo falla (Mailtrap caido, credenciales invalidas), el favorito ya se guardo
+                logger()->error('Error al enviar notificacion de favorito: ' . $e->getMessage());
+            }
 
             $this->esFavorito = true;
         }
