@@ -85,4 +85,112 @@ class ProductListTest extends TestCase
 
         $componente->assertSet('categoriaSeleccionada', 0);
     }
+
+    #[Test]
+    public function pagina_inicia_en_cero(): void
+    {
+        $this->fakeHttp();
+
+        $componente = Livewire::test(ProductList::class);
+
+        $componente->assertSet('pagina', 0);
+    }
+
+    #[Test]
+    public function pagina_siguiente_incrementa(): void
+    {
+        Http::fake([
+            'api.escuelajs.co/api/v1/categories' => Http::response($this->categoriasMock),
+            'api.escuelajs.co/*' => Http::response($this->productosMock),
+        ]);
+
+        $componente = Livewire::test(ProductList::class);
+
+        $componente->call('paginaSiguiente');
+
+        $componente->assertSet('pagina', 1);
+    }
+
+    #[Test]
+    public function pagina_anterior_decrementa(): void
+    {
+        Http::fake([
+            'api.escuelajs.co/api/v1/categories' => Http::response($this->categoriasMock),
+            'api.escuelajs.co/*' => Http::response($this->productosMock),
+        ]);
+
+        $componente = Livewire::test(ProductList::class);
+
+        $componente->set('pagina', 2);
+        $componente->call('paginaAnterior');
+
+        $componente->assertSet('pagina', 1);
+    }
+
+    #[Test]
+    public function anterior_no_baja_de_cero(): void
+    {
+        Http::fake([
+            'api.escuelajs.co/api/v1/categories' => Http::response($this->categoriasMock),
+            'api.escuelajs.co/*' => Http::response($this->productosMock),
+        ]);
+
+        $componente = Livewire::test(ProductList::class);
+
+        $componente->call('paginaAnterior');
+
+        $componente->assertSet('pagina', 0);
+    }
+
+    #[Test]
+    public function filtrar_categoria_resetea_pagina(): void
+    {
+        Http::fake([
+            'api.escuelajs.co/api/v1/categories' => Http::response($this->categoriasMock),
+            'api.escuelajs.co/*' => Http::response($this->productosMock),
+        ]);
+
+        $componente = Livewire::test(ProductList::class);
+
+        $componente->set('pagina', 3);
+        $componente->call('filtrarPorCategoria', 1);
+
+        $componente->assertSet('pagina', 0);
+    }
+
+    #[Test]
+    public function hayMas_true_cuando_hay_suficientes_productos(): void
+    {
+        $muchosProductos = array_map(fn($i) => [
+            'id' => $i, 'title' => "Producto $i", 'price' => 10,
+            'images' => ['img.jpg'], 'category' => ['id' => 1, 'name' => 'Cat'],
+        ], range(1, 20));
+
+        Http::fake([
+            'api.escuelajs.co/api/v1/categories' => Http::response($this->categoriasMock),
+            'api.escuelajs.co/*' => Http::response($muchosProductos),
+        ]);
+
+        $componente = Livewire::test(ProductList::class);
+
+        $componente->assertSet('hayMas', true);
+    }
+
+    #[Test]
+    public function hayMas_false_cuando_quedan_pocos_productos(): void
+    {
+        $pocosProductos = array_map(fn($i) => [
+            'id' => $i, 'title' => "Producto $i", 'price' => 10,
+            'images' => ['img.jpg'], 'category' => ['id' => 1, 'name' => 'Cat'],
+        ], range(1, 5));
+
+        Http::fake([
+            'api.escuelajs.co/api/v1/categories' => Http::response($this->categoriasMock),
+            'api.escuelajs.co/*' => Http::response($pocosProductos),
+        ]);
+
+        $componente = Livewire::test(ProductList::class);
+
+        $componente->assertSet('hayMas', false);
+    }
 }

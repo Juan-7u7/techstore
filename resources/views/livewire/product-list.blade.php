@@ -60,4 +60,33 @@
             </div>
         @endforeach
     </div>
+
+    {{-- Controles de paginacion estilo pill --}}
+    <div class="flex items-center justify-center gap-4 mt-10">
+        <button
+            wire:click="paginaAnterior"
+            @disabled($pagina === 0)
+            class="px-5 py-2 rounded-full text-sm font-medium transition
+                {{ $pagina === 0
+                    ? 'bg-gray-100 text-dark/30 cursor-not-allowed'
+                    : 'bg-white text-dark/70 border border-accent/50 hover:bg-accent/30' }}"
+        >
+            &larr; Anterior
+        </button>
+
+        <span class="text-sm font-medium text-dark/60">
+            Pagina {{ $pagina + 1 }}
+        </span>
+
+        <button
+            wire:click="paginaSiguiente"
+            @disabled(!$hayMas)
+            class="px-5 py-2 rounded-full text-sm font-medium transition
+                {{ !$hayMas
+                    ? 'bg-gray-100 text-dark/30 cursor-not-allowed'
+                    : 'bg-white text-dark/70 border border-accent/50 hover:bg-accent/30' }}"
+        >
+            Siguiente &rarr;
+        </button>
+    </div>
 </div>
