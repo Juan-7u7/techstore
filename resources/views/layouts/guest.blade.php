@@ -7,30 +7,26 @@
 
         <title>{{ config('app.name', 'TechStore Explorer') }}</title>
 
-        <!-- Fuentes -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
 
         @vite(['resources/css/app.css', 'resources/js/app.jsx'])
     </head>
-    <body class="font-sans antialiased bg-accent/20 text-dark">
-        <div class="min-h-screen flex flex-col items-center justify-center px-4 py-8">
-            <!-- Logo y titulo -->
-            <div class="text-center mb-6">
+    <body class="font-sans bg-fondo text-primary">
+        <div class="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+            <div class="text-center mb-8">
                 <a href="/" wire:navigate class="inline-flex items-center gap-3">
-                    <x-application-logo class="w-12 h-12 fill-current text-primary" />
-                    <span class="text-2xl font-bold text-primary hidden sm:inline">TechStore</span>
+                    <x-application-logo class="w-10 h-10 fill-current text-primary" />
+                    <span class="text-xl font-heading font-semibold text-primary tracking-tight hidden sm:inline">TechStore</span>
                 </a>
             </div>
 
-            <!-- Tarjeta del formulario -->
-            <div class="w-full sm:max-w-md bg-white border border-accent/50 shadow-stack-lg rounded-2xl px-8 py-6">
+            <div class="w-full sm:max-w-md bg-surface border border-border/60 shadow-soft-lg rounded-2xl px-8 py-8">
                 {{ $slot }}
             </div>
 
-            <!-- Footer -->
-            <footer class="mt-8 text-sm text-dark/50">
+            <footer class="mt-8 text-sm text-muted">
                 &copy; {{ date('Y') }} TechStore Explorer
             </footer>
         </div>

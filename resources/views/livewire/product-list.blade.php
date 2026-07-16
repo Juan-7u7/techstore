@@ -1,10 +1,8 @@
 <div>
-    {{-- Filtro de categorias con paleta primary/accent --}}
-    <div class="mb-8 flex flex-wrap gap-2">
+    <div class="flex flex-wrap gap-2 mb-8">
         <button
             wire:click="filtrarPorCategoria(0)"
-            class="px-5 py-2 rounded-full text-sm font-medium transition
-                {{ $categoriaSeleccionada === 0 ? 'bg-primary text-white shadow-md' : 'bg-white text-dark/70 border border-accent/50 hover:bg-accent/30' }}"
+            class="{{ $categoriaSeleccionada === 0 ? 'btn-pill-active' : 'btn-pill-ghost' }}"
         >
             Todas
         </button>
@@ -12,38 +10,24 @@
         @foreach ($categorias as $categoria)
             <button
                 wire:click="filtrarPorCategoria({{ $categoria['id'] }})"
-                class="px-5 py-2 rounded-full text-sm font-medium transition
-                    {{ $categoriaSeleccionada === $categoria['id'] ? 'bg-primary text-white shadow-md' : 'bg-white text-dark/70 border border-accent/50 hover:bg-accent/30' }}"
+                class="{{ $categoriaSeleccionada === $categoria['id'] ? 'btn-pill-active' : 'btn-pill-ghost' }}"
             >
                 {{ $categoria['name'] }}
             </button>
         @endforeach
     </div>
 
-    {{-- Grid de productos responsivo --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         @foreach ($productos as $producto)
-            <div class="bg-white rounded-2xl shadow-stack-sm border border-accent/20 overflow-hidden hover:shadow-stack-lg hover:border-accent transition-all duration-300 flex flex-col">
-                {{-- Imagen del producto --}}
-                <img
-                    src="{{ $producto['images'][0] ?? 'https://placehold.co/300x300' }}"
-                    alt="{{ $producto['title'] }}"
-                    class="w-full h-48 object-cover"
-                >
-                {{-- Informacion del producto --}}
-                <div class="p-4 flex flex-col flex-1">
-                    <span class="text-xs font-semibold text-primary uppercase tracking-wider">
-                        {{ $producto['category']['name'] ?? 'Sin categoria' }}
-                    </span>
-                    <h3 class="text-lg font-heading font-semibold mt-1 text-dark line-clamp-2">{{ $producto['title'] }}</h3>
-                    <p class="text-xl font-bold text-primary mt-2">${{ number_format($producto['price'], 2) }}</p>
-                    {{-- Acciones: ver detalle y favorito --}}
-                    <div class="mt-auto pt-4 flex items-center justify-between">
-                        <a href="{{ route('productos.detalle', $producto['id']) }}"
-                           class="text-sm font-medium text-primary hover:text-primary/70 transition">
-                            Ver detalle &rarr;
-                        </a>
-                        @auth
+            <div class="card-product group">
+                <div class="relative aspect-square bg-fondo overflow-hidden">
+                    <img
+                        src="{{ $producto['images'][0] ?? 'https://placehold.co/400x400' }}"
+                        alt="{{ $producto['title'] }}"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    >
+                    @auth
+                        <div class="absolute top-2 right-2 z-10">
                             <livewire:favorito-button
                                 :productoId="$producto['id']"
                                 :productoData="[
@@ -54,37 +38,40 @@
                                 ]"
                                 :key="'fav-' . $producto['id']"
                             />
-                        @endauth
-                    </div>
+                        </div>
+                    @endauth
+                </div>
+
+                <div class="p-4 flex flex-col flex-1 gap-1.5">
+                    <span class="text-xs text-muted uppercase tracking-wider font-medium">
+                        {{ $producto['category']['name'] ?? 'General' }}
+                    </span>
+                    <a href="{{ route('productos.detalle', $producto['id']) }}" wire:navigate>
+                        <h3 class="font-heading font-semibold text-primary leading-snug line-clamp-2 group-hover:text-accent transition-colors">
+                            {{ $producto['title'] }}
+                        </h3>
+                    </a>
+                    <p class="text-lg font-semibold text-primary mt-auto pt-2">${{ number_format($producto['price'], 2) }}</p>
                 </div>
             </div>
         @endforeach
     </div>
 
-    {{-- Controles de paginacion estilo pill --}}
-    <div class="flex items-center justify-center gap-4 mt-10">
+    <div class="flex items-center justify-center gap-3 mt-12">
         <button
             wire:click="paginaAnterior"
             @disabled($pagina === 0)
-            class="px-5 py-2 rounded-full text-sm font-medium transition
-                {{ $pagina === 0
-                    ? 'bg-gray-100 text-dark/30 cursor-not-allowed'
-                    : 'bg-white text-dark/70 border border-accent/50 hover:bg-accent/30' }}"
+            class="{{ $pagina === 0 ? 'btn-pill-ghost opacity-40 cursor-not-allowed' : 'btn-pill-ghost' }}"
         >
             &larr; Anterior
         </button>
 
-        <span class="text-sm font-medium text-dark/60">
-            Pagina {{ $pagina + 1 }}
-        </span>
+        <span class="text-sm text-muted px-3">Página {{ $pagina + 1 }}</span>
 
         <button
             wire:click="paginaSiguiente"
             @disabled(!$hayMas)
-            class="px-5 py-2 rounded-full text-sm font-medium transition
-                {{ !$hayMas
-                    ? 'bg-gray-100 text-dark/30 cursor-not-allowed'
-                    : 'bg-white text-dark/70 border border-accent/50 hover:bg-accent/30' }}"
+            class="{{ !$hayMas ? 'btn-pill-ghost opacity-40 cursor-not-allowed' : 'btn-pill-ghost' }}"
         >
             Siguiente &rarr;
         </button>

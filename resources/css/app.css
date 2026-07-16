@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        @apply antialiased text-primary bg-fondo;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+        @apply bg-accent/20 text-primary;
+    }
+}
+
+@layer components {
+    .kpi-card {
+        @apply bg-surface rounded-2xl border border-border/60 p-6 transition-shadow duration-200;
+    }
+    .kpi-card:hover {
+        @apply shadow-soft-md;
+    }
+
+    .card-product {
+        @apply bg-surface rounded-2xl border border-border/60 overflow-hidden
+               transition-all duration-300 flex flex-col;
+    }
+    .card-product:hover {
+        @apply shadow-soft-lg border-border;
+    }
+
+    .btn-pill {
+        @apply inline-flex items-center justify-center px-5 py-2.5 rounded-full text-sm font-medium
+               transition-all duration-200;
+    }
+    .btn-pill-primary {
+        @apply btn-pill bg-primary text-white hover:bg-primary/90 active:bg-primary/80;
+    }
+    .btn-pill-ghost {
+        @apply btn-pill bg-transparent text-muted border border-border/70
+               hover:border-border hover:text-primary;
+    }
+    .btn-pill-active {
+        @apply btn-pill bg-primary/10 text-primary border border-primary/20;
+    }
+}

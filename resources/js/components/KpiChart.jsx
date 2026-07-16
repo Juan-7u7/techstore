@@ -1,4 +1,3 @@
-// Componente React que renderiza una grafica de barras horizontal con Chart.js (CDN)
 import React, { useRef, useEffect } from 'react';
 
 export default function KpiChart({ labels, values }) {
@@ -22,6 +21,11 @@ export default function KpiChart({ labels, values }) {
             const ctx = canvasRef.current?.getContext('2d');
             if (!ctx) return;
 
+            const computed = getComputedStyle(document.documentElement);
+            const barColor = '#3B82F6';
+            const gridColor = '#E4E4E7';
+            const labelColor = '#71717A';
+
             chartRef.current = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -29,8 +33,8 @@ export default function KpiChart({ labels, values }) {
                     datasets: [{
                         label: 'Favoritos',
                         data: values,
-                        backgroundColor: '#0077C0',
-                        borderRadius: 6,
+                        backgroundColor: barColor,
+                        borderRadius: 4,
                         borderSkipped: false,
                     }],
                 },
@@ -47,12 +51,14 @@ export default function KpiChart({ labels, values }) {
                             ticks: {
                                 stepSize: 1,
                                 font: { family: 'Inter, sans-serif', size: 12 },
+                                color: labelColor,
                             },
-                            grid: { color: '#f0f0f0' },
+                            grid: { color: gridColor },
                         },
                         y: {
                             ticks: {
                                 font: { family: 'Inter, sans-serif', size: 12 },
+                                color: labelColor,
                             },
                             grid: { display: false },
                         },

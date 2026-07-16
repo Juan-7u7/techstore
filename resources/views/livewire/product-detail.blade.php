@@ -1,50 +1,44 @@
-<div class="max-w-5xl mx-auto">
+<div class="max-w-6xl mx-auto">
     @if ($producto)
-        {{-- Tarjeta de detalle del producto --}}
-        <div class="bg-white rounded-2xl shadow-stack-md border border-accent/20 overflow-hidden">
-            <div class="md:flex">
-                {{-- Galeria de imagenes --}}
-                <div class="md:w-1/2 p-6">
-                    <img
-                        src="{{ $producto['images'][0] ?? 'https://placehold.co/400x400' }}"
-                        alt="{{ $producto['title'] }}"
-                        class="w-full h-80 object-cover rounded-xl"
-                    >
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            <div class="bg-fondo rounded-2xl overflow-hidden aspect-square">
+                <img
+                    src="{{ $producto['images'][0] ?? 'https://placehold.co/600x600' }}"
+                    alt="{{ $producto['title'] }}"
+                    class="w-full h-full object-cover"
+                >
+            </div>
 
-                {{-- Informacion del producto --}}
-                <div class="p-6 md:w-1/2 flex flex-col justify-between">
-                    <div>
-                        <span class="text-sm font-semibold text-primary uppercase tracking-wider">
-                            {{ $producto['category']['name'] ?? 'Sin categoria' }}
-                        </span>
-                        <h1 class="text-2xl font-heading font-bold mt-2 text-dark">{{ $producto['title'] }}</h1>
-                        <p class="text-3xl font-bold text-primary mt-4">${{ number_format($producto['price'], 2) }}</p>
-                        <p class="text-dark/70 mt-4 leading-relaxed">{{ $producto['description'] }}</p>
-                    </div>
-                    {{-- Acciones --}}
-                    <div class="mt-8 flex flex-wrap items-center gap-4">
-                        <a href="{{ route('productos.index') }}"
-                           class="text-sm font-medium text-primary hover:text-primary/70 transition inline-flex items-center gap-1">
-                            &larr; Volver a productos
-                        </a>
-                        @auth
-                            <livewire:favorito-button
-                                :productoId="$producto['id']"
-                                :productoData="[
-                                    'title' => $producto['title'],
-                                    'price' => $producto['price'],
-                                    'image' => $producto['images'][0] ?? '',
-                                    'category' => $producto['category']['name'] ?? '',
-                                ]"
-                                :key="'fav-detail-' . $producto['id']"
-                            />
-                        @endauth
-                    </div>
+            <div class="flex flex-col justify-center">
+                <span class="text-xs text-muted uppercase tracking-widest font-medium">
+                    {{ $producto['category']['name'] ?? 'General' }}
+                </span>
+                <h1 class="text-display mt-2 text-primary">{{ $producto['title'] }}</h1>
+                <p class="text-3xl font-semibold text-primary mt-4">${{ number_format($producto['price'], 2) }}</p>
+                <hr class="my-6 border-border/50">
+                <p class="text-muted leading-relaxed text-base">{{ $producto['description'] }}</p>
+
+                <div class="flex flex-wrap items-center gap-3 mt-8">
+                    <a href="{{ route('productos.index') }}"
+                       class="btn-pill-ghost text-sm gap-1.5">
+                        &larr; Volver
+                    </a>
+                    @auth
+                        <livewire:favorito-button
+                            :productoId="$producto['id']"
+                            :productoData="[
+                                'title' => $producto['title'],
+                                'price' => $producto['price'],
+                                'image' => $producto['images'][0] ?? '',
+                                'category' => $producto['category']['name'] ?? '',
+                            ]"
+                            :key="'fav-detail-' . $producto['id']"
+                        />
+                    @endauth
                 </div>
             </div>
         </div>
     @else
-        <p class="text-center text-dark/50 mt-12">Producto no encontrado.</p>
+        <p class="text-center text-muted mt-16">Producto no encontrado.</p>
     @endif
 </div>
