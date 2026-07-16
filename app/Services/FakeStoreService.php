@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class FakeStoreService
 {
+    // URL base de la Fake Store API de Platzi
     private string $baseUrl = 'https://api.escuelajs.co/api/v1';
 
     /**
@@ -13,6 +14,7 @@ class FakeStoreService
      */
     public function getProducts(int $offset = 0, int $limit = 20): array
     {
+        // verify=false deshabilita SSL en local (entorno sin certificados CA)
         $response = Http::withOptions(['verify' => false])->get("{$this->baseUrl}/products", [
             'offset' => $offset,
             'limit' => $limit,

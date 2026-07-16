@@ -10,19 +10,23 @@ use Livewire\Component;
 
 class ProductList extends Component
 {
+    // Lista de productos y categorias obtenidos de la API
     public array $productos = [];
     public array $categorias = [];
+    // ID de la categoria seleccionada (0 = todas)
     public int $categoriaSeleccionada = 0;
     public int $pagina = 0;
     public int $limite = 20;
 
     protected FakeStoreService $api;
 
+    // Inyecta el servicio de la Fake Store API
     public function boot(FakeStoreService $api): void
     {
         $this->api = $api;
     }
 
+    // Al iniciar el componente carga categorias y productos
     public function mount(): void
     {
         $this->cargarCategorias();
@@ -58,6 +62,7 @@ class ProductList extends Component
         $this->cargarProductos();
     }
 
+    // Renderiza la vista del listado de productos
     public function render()
     {
         return view('livewire.product-list');

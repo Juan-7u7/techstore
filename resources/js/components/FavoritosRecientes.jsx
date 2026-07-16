@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react';
 
+// Componente React que muestra los ultimos 5 favoritos del usuario
 export default function FavoritosRecientes() {
+    // Estado: lista de favoritos y bandera de carga
     const [favoritos, setFavoritos] = useState([]);
     const [cargando, setCargando] = useState(true);
 
+    // Al montar el componente obtiene los favoritos via API
     useEffect(() => {
         fetch('/api/favorites', {
             headers: {
                 'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest', // Necesario para Sanctum SPA
             },
-            credentials: 'same-origin',
+            credentials: 'same-origin', // Envia la cookie de sesion
         })
             .then(res => res.json())
             .then(data => {
-                setFavoritos(data.slice(0, 5));
+                setFavoritos(data.slice(0, 5)); // Solo los ultimos 5
                 setCargando(false);
             })
-            .catch(() => setCargando(false));
+            .catch(() => setCargando(false)); // Silencia errores si no hay sesion
     }, []);
 
     if (cargando) {
