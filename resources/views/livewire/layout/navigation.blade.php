@@ -23,7 +23,7 @@ new class extends Component
             <div class="flex items-center gap-8">
                 <a href="{{ route('productos.index') }}" wire:navigate class="flex items-center gap-2.5 shrink-0">
                     <img src="{{ asset('images/logo.svg') }}" alt="TechStore" class="h-7 w-auto">
-                    <span class="font-heading font-semibold text-primary text-lg tracking-tight hidden sm:inline">TechStore</span>
+                    <span class="font-heading font-semibold text-primary text-lg tracking-tight">TechStore</span>
                 </a>
 
                 <div class="hidden sm:flex items-center gap-1">
