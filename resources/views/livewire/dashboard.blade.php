@@ -46,8 +46,22 @@
                 <ul class="divide-y divide-border/60 -mx-1">
                     @foreach ($productosTop as $i => $item)
                         <li class="py-2.5 flex items-center gap-3">
-                            <span class="shrink-0 w-6 text-center text-sm font-bold {{ $i === 0 ? 'text-amber-400' : ($i === 1 ? 'text-gray-400' : ($i === 2 ? 'text-amber-700' : 'text-muted/40')) }}">
-                                @if ($i === 0) 🥇 @elseif($i === 1) 🥈 @elseif($i === 2) 🥉 @else {{ $i + 1 }}. @endif
+                            <span class="shrink-0 w-6 flex items-center justify-center">
+                                @if ($i === 0)
+                                    <span class="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center">
+                                        <span class="text-xs font-bold text-amber-500">1</span>
+                                    </span>
+                                @elseif($i === 1)
+                                    <span class="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center">
+                                        <span class="text-xs font-bold text-gray-400">2</span>
+                                    </span>
+                                @elseif($i === 2)
+                                    <span class="w-5 h-5 rounded-full bg-amber-50 flex items-center justify-center">
+                                        <span class="text-xs font-bold text-amber-700">3</span>
+                                    </span>
+                                @else
+                                    <span class="text-sm font-bold text-muted/40">{{ $i + 1 }}.</span>
+                                @endif
                             </span>
                             @if ($item['image'])
                                 <img src="{{ $item['image'] }}" alt="{{ $item['title'] }}"
