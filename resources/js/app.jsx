@@ -1,19 +1,28 @@
-// Punto de entrada de React: monta los componentes en sus contenedores del DOM
 import { createRoot } from 'react-dom/client';
 import FavoritosRecientes from './components/FavoritosRecientes';
 import KpiChart from './components/KpiChart';
 
-// Monta el componente de favoritos recientes si existe el contenedor
-const contenedorFav = document.getElementById('react-favoritos');
-if (contenedorFav) {
-    const favoritos = JSON.parse(contenedorFav.dataset.favoritos || '[]');
-    createRoot(contenedorFav).render(<FavoritosRecientes favoritosIniciales={favoritos} />);
+let rootFav = null;
+let rootChart = null;
+
+function montarReact() {
+    const cFav = document.getElementById('react-favoritos');
+    if (cFav) {
+        if (rootFav) rootFav.unmount();
+        const favoritos = JSON.parse(cFav.dataset.favoritos || '[]');
+        rootFav = createRoot(cFav);
+        rootFav.render(<FavoritosRecientes favoritosIniciales={favoritos} />);
+    }
+
+    const cChart = document.getElementById('react-chart');
+    if (cChart) {
+        if (rootChart) rootChart.unmount();
+        const labels = JSON.parse(cChart.dataset.labels || '[]');
+        const values = JSON.parse(cChart.dataset.values || '[]');
+        rootChart = createRoot(cChart);
+        rootChart.render(<KpiChart labels={labels} values={values} />);
+    }
 }
 
-// Monta la grafica de KPIs si existe el contenedor, pasandole datos desde data-atributos
-const contenedorChart = document.getElementById('react-chart');
-if (contenedorChart) {
-    const labels = JSON.parse(contenedorChart.dataset.labels || '[]');
-    const values = JSON.parse(contenedorChart.dataset.values || '[]');
-    createRoot(contenedorChart).render(<KpiChart labels={labels} values={values} />);
-}
+document.addEventListener('livewire:navigated', montarReact);
+montarReact();
